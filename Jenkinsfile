@@ -15,7 +15,7 @@ pipeline {
       steps {
         parallel(
           "Build Database EE 12.2.0.1": {
-            dir(path: 'OracleDatabase/dockerfiles') {
+            dir(path: 'OracleDatabase/SingleInstance/dockerfiles') {
               sh 'if [ ! -f 12.2.0.1/linuxx64_12201_database.zip ]; then cp /software/Oracle/Database/linuxx64_12201_database.zip 12.2.0.1/linuxx64_12201_database.zip; fi'
               sh 'sudo ./buildDockerImage.sh -v 12.2.0.1 -e -i'
               sh 'docker tag oracle/database:12.2.0.1-ee localhost:5000/oracle/database:12.2.0.1-ee'
