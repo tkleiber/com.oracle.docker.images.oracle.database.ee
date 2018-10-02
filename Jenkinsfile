@@ -14,12 +14,12 @@ pipeline {
     stage('Build Oracle Docker Images') {
       steps {
         parallel(
-          "Build Database EE 12.2.0.1": {
+          "Build Database EE 18.3.0": {
             dir(path: 'OracleDatabase/SingleInstance/dockerfiles') {
-              sh 'if [ ! -f 12.2.0.1/linuxx64_12201_database.zip ]; then cp /software/Oracle/Database/linuxx64_12201_database.zip 12.2.0.1/linuxx64_12201_database.zip; fi'
-              sh 'sudo ./buildDockerImage.sh -v 12.2.0.1 -e -i'
-              sh 'docker tag oracle/database:12.2.0.1-ee localhost:5000/oracle/database:12.2.0.1-ee'
-              sh 'docker push localhost:5000/oracle/database:12.2.0.1-ee'
+              sh 'if [ ! -f 18.3.0/LINUX.X64_180000_db_home.zip ]; then cp /software/Oracle/Database/LINUX.X64_180000_db_home.zip 18.3.0/LINUX.X64_180000_db_home.zip; fi'
+              sh 'sudo ./buildDockerImage.sh -v 18.3.0 -e -i'
+              sh 'docker tag oracle/database:18.3.0-ee localhost:5000/oracle/database:18.3.0-ee'
+              sh 'docker push localhost:5000/oracle/database:18.3.0-ee'
             }
           }
         )
@@ -28,9 +28,9 @@ pipeline {
     stage('Cleanup') {
       steps {
         parallel(
-          "Cleanup Database EE 12.2.0.1": {
-            sh 'docker rmi --force localhost:5000/oracle/database:12.2.0.1-ee'
-            sh 'docker rmi --force oracle/database:12.2.0.1-ee'
+          "Cleanup Database EE 18.3.0": {
+            sh 'docker rmi --force localhost:5000/oracle/database:18.3.0-ee'
+            sh 'docker rmi --force oracle/database:18.3.0-ee'
           }
         )
       }
